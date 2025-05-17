@@ -1,5 +1,6 @@
 bootloader
-out
 docs/sphinx/venv
+kernel/**/*.o
+kernel/kernel
 *.iso
 *.hdd

@@ -4,7 +4,21 @@ XORRISOFLAGS := -R -r -J -hfsplus -apm-block-size 2048 --efi-boot boot/limine/li
 CC := gcc
 CFLAGS := -mcmodel=large -ffreestanding -O2 -Wall -Werror -Wextra -Ikernel/libc -Ikernel/include -Ikernel/core
 LDFLAGS := -nostdlib -T kernel/linker.ld
-KERNELOUT := kernel/out/kernel
+KERNELSRC := \
+	kernel/main.c \
+	kernel/cpu/gdt.c \
+	kernel/memory/memory.c \
+	kernel/cpu/idt.c \
+	kernel/cpu/ports.c \
+	kernel/graphics/fb.c \
+	kernel/graphics/psf.c \
+	kernel/graphics/console.c \
+	kernel/graphics/draw.c \
+	kernel/drivers/serial.c \
+	kernel/cpu/sse.c \
+	kernel/core/core.c
+KERNELOBJ := $(KERNELSRC:.c=.o)
+KERNEL := kernel/kernel
 
 override IMAGE_NAME := tchux-$(ARCH)
 
@@ -27,33 +41,19 @@ bootloader/limine:
 	$(MAKE) -C bootloader/limine
 
 # kernel compile
-$(KERNELOUT): $(KERNELSRC)
-	mkdir kernel/out
-	$(CC) $(CFLAGS) -c -o kernel/out/main.o kernel/main.c
-	$(CC) $(CFLAGS) -c -o kernel/out/gdt.o kernel/cpu/gdt.c
-	$(CC) $(CFLAGS) -c -o kernel/out/memory.o kernel/memory/memory.c
-	$(CC) $(CFLAGS) -c -o kernel/out/idt.o kernel/cpu/idt.c
-	$(CC) $(CFLAGS) -c -o kernel/out/ports.o kernel/cpu/ports.c
-	$(CC) $(CFLAGS) -c -o kernel/out/fb.o kernel/graphics/fb.c
-	$(CC) $(CFLAGS) -c -o kernel/out/psf.o kernel/graphics/psf.c
-	$(CC) $(CFLAGS) -c -o kernel/out/console.o kernel/graphics/console.c
-	$(CC) $(CFLAGS) -c -o kernel/out/draw.o kernel/graphics/draw.c
-	$(CC) $(CFLAGS) -c -o kernel/out/serial.o kernel/drivers/serial.c
-	$(CC) $(CFLAGS) -c -o kernel/out/sse.o kernel/cpu/sse.c
-	$(CC) $(CFLAGS) -c -o kernel/out/core.o kernel/core/core.c
-	ld $(LDFLAGS) -o $@ kernel/out/*.o
+$(KERNEL): $(KERNELOBJ)
+	ld $(LDFLAGS) -o $@ $(KERNELOBJ)
 
 # crete iso
-$(IMAGE_NAME).iso: bootloader/limine $(KERNELOUT) init/boot/limine/limine.conf
+$(IMAGE_NAME).iso: bootloader/limine $(KERNEL) init/boot/limine/limine.conf
 	rm -rf iso_root
 	mkdir -p iso_root/boot/limine iso_root/EFI/BOOT
-	cp -v $(KERNELOUT) iso_root/boot/kernel
+	cp -v $(KERNEL) iso_root/boot/kernel
 	cp -v init/boot/limine/limine.conf iso_root/boot/limine/
 	cp -v bootloader/limine/limine-uefi-cd.bin iso_root/boot/limine/
 	cp -v bootloader/limine/BOOTX64.EFI iso_root/EFI/BOOT/
 	xorriso -as mkisofs $(XORRISOFLAGS) iso_root -o $(IMAGE_NAME).iso
 	rm -rf iso_root
-	rm -rf kernel/out
 
 run:
 	run-$(ARCH)
@@ -64,7 +64,7 @@ run-x86_64: bootloader/ovmf/ovmf-code-$(ARCH).fd $(IMAGE_NAME).iso
 	-cdrom $(IMAGE_NAME).iso $(QEMUFLAGS)
 
 clean:
-	rm -rf iso_root $(IMAGE_NAME).iso limine ovmf $(KERNELOUT) kernel/out/*.o
+	rm -rf iso_root $(IMAGE_NAME).iso limine ovmf $(KERNEL) kernel/**/*.o
 	
 	
 # -serial in qemu flags
