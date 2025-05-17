@@ -6,9 +6,9 @@
 
 struct bitmap_struct
 {
-	uint8_t *data;
-	uint64_t data_size_blocks;
-	uint64_t data_size_bytes;
+	uint8_t *bitmap_addr;
+	uint64_t bitmap_size_blocks;
+	uint64_t bitmap_size_bytes;
 	uint64_t allocated_size_blocks;
 	uint64_t last_scan;
 	uint64_t mem_start;
