@@ -3,9 +3,6 @@
 #include <stdbool.h>
 #include <gohufont.h>
 
-extern char _binary_zap_light16_psf_start;
-extern char _binary_zap_light16_psf_end;
-
 struct psf1_header_struct psf1_header;
 struct psf_font_struct psf_font;
 struct psf1_header_struct *psf;
