@@ -15,15 +15,12 @@ struct bitmap_struct
 	bool ready;
 }
 
-#define BLOCKS_PER_BYTE 8
-#define BLOCKS_SIZE 4096
-#define INVALID_BLOCK ((uint64_t)-1)
+uint32_t bitmap_get(struct bitmap_struct *bitmap, uint64_t block)
+void bitmap_set(struct bitmap_struct *bitmap, uint64_t block)
+void bitmap_clear(struct bitmap_struct *bitmap, uint64_t block)
 
-uint64_t addr = block / BLOCKS_PER_BYTE;
-uint64_t offset = block % BLOCKS_PER_BYTE;
-
-uint32_t bitmap_get(struct bitmap_struct *bitmap, uint64_t block);
-void bitmap_set(struct bitmap_struct *bitmap, uint64_t block, bool value);
+void bitmap_mark_blocks(struct bitmap_struct *bitmap, size_t start, size_t size);
+void bitmap_clear_blocks(struct bitmap_struct *bitmap, size_t start, size_t size);
 
 
 
