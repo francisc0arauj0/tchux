@@ -16,6 +16,8 @@ extern struct psf1_header_struct *psf;
 
 void load_psf(void *buffer);
 void load_default_font();
+
 void psf_putc(int x, int y, char c, uint8_t r, uint8_t g, uint8_t b);
+void psf_write(int x, int y, char *str, uint8_t r, uint8_t g, uint8_t b);
 
 #endif

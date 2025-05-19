@@ -32,3 +32,11 @@ void psf_putc(int x, int y, char c, uint8_t r, uint8_t g, uint8_t b)
 		}
 	}
 }
+
+void psf_write(int x, int y, char *str, uint8_t r, uint8_t g, uint8_t b)
+{
+	for (int i = 0; str[i] != '\0'; i++)
+	{
+		psf_putc(x + i * 8, y, str[i], r, g, b);
+	}
+}
