@@ -2,7 +2,7 @@
 #include <draw.h>
 #include <stdint.h>
 
-void draw_pixel(int32_t x, int32_t y, uint8_t r, uint8_t  g, uint8_t  b)
+void draw_pixel(int x, int y, uint8_t r, uint8_t g, uint8_t b)
 {
 	uint32_t i = (x + y * framebuffer.width) * 4;
 	framebuffer.addr[i + 0] = b;
@@ -11,7 +11,7 @@ void draw_pixel(int32_t x, int32_t y, uint8_t r, uint8_t  g, uint8_t  b)
 	framebuffer.addr[i + 3] = 0;
 }
 
-void draw_rect(int32_t x, int32_t y, int32_t w, int32_t h, uint8_t r, uint8_t g, uint8_t b)
+void draw_rect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b)
 {
 	uint32_t o = (x + y * framebuffer.width) * 4;
 	

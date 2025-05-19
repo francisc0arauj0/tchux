@@ -12,22 +12,10 @@ struct psf1_header_struct {
     uint8_t charsize;
 };
 
-struct psf_font_struct
-{
-	uint32_t magic;
-	uint32_t version;
-	uint32_t headersize;
-    uint32_t flags;
-    uint32_t numglyph;
-    uint32_t bytesperglyph;
-    uint32_t height;
-    uint32_t width;
-};
-
 extern struct psf1_header_struct *psf;
 
 void load_psf(void *buffer);
 void load_default_font();
-void psf_putc(uint32_t x, uint32_t y, char c, uint32_t color);
+void psf_putc(int x, int y, char c, uint8_t r, uint8_t g, uint8_t b);
 
 #endif

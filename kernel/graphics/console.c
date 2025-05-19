@@ -12,10 +12,11 @@ void init_console()
 	width = 0;
 	height = 0;
 	
-	draw_rect(20, 20, 50, 50, 255, 0, 0);
+	/*draw_rect(20, 20, 50, 50, 255, 0, 0);
 	draw_rect(120, 20, 50, 50, 0, 255, 0);
-	draw_rect(220, 20, 50, 50, 0, 0, 255);
+	draw_rect(220, 20, 50, 50, 0, 0, 255);*/
 	load_default_font();
+	psf_putc(20, 20, 'a', 255, 0, 0);
 }
 	
 uint32_t get_console_x()
