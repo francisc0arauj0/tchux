@@ -7,6 +7,7 @@
 #include <console.h>
 #include <serial.h>
 #include <sse.h>
+#include <shell.h>
 
 static void hcf(void)
 {
@@ -30,6 +31,7 @@ void kmain(void)
 	/* framebuffer */
 	init_fb();
 	init_console();
+	init_shell(1);
 	
 	/* cpu */
 	init_gdt();

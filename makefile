@@ -14,6 +14,7 @@ KERNELSRC := \
 	kernel/graphics/psf.c \
 	kernel/graphics/console.c \
 	kernel/graphics/draw.c \
+	kernel/graphics/shell.c \
 	kernel/drivers/serial.c \
 	kernel/cpu/sse.c \
 	kernel/core/core.c
