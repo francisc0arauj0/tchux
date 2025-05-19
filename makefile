@@ -9,6 +9,7 @@ KERNELSRC := \
 	kernel/cpu/gdt.c \
 	kernel/memory/memory.c \
 	kernel/cpu/idt.c \
+	kernel/cpu/isr.c \
 	kernel/cpu/ports.c \
 	kernel/graphics/fb.c \
 	kernel/graphics/psf.c \
@@ -43,7 +44,8 @@ bootloader/limine:
 
 # kernel compile
 $(KERNEL): $(KERNELOBJ)
-	ld $(LDFLAGS) -o $@ $(KERNELOBJ)
+	nasm -f elf64 kernel/cpu/isr.asm -o kernel/cpu/isrs.o
+	ld $(LDFLAGS) -o $@ $(KERNELOBJ) kernel/cpu/isrs.o
 
 # crete iso
 $(IMAGE_NAME).iso: bootloader/limine $(KERNEL) init/boot/limine/limine.conf
