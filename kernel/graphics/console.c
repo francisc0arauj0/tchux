@@ -15,8 +15,8 @@ int text_color[] = {255, 255, 255};
 
 void init_console()
 {
-	console.width = 200;
-	console.height = 200;
+	console.width = 0;
+	console.height = 0;
 	
 	load_default_font();
 }

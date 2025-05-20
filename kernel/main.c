@@ -37,7 +37,5 @@ void kmain(void)
 	init_gdt();
 	init_idt();
 	
-	serial_putc('a');
-	
 	hcf();
 }

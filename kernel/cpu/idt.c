@@ -1,7 +1,6 @@
 #include <idt.h>
 #include <gdt.h>
 #include <core.h>
-#include <isr.h>
 
 struct idt_entry_struct idt_entries[256];
 struct idt_ptr_struct idt_ptr;
@@ -10,10 +9,7 @@ void init_idt()
 {
 	idt_ptr.limit = sizeof(struct idt_entry_struct) * 256 - 1;
 	idt_ptr.base = (uint64_t) &idt_entries;
-	
-	remap_pic();
-	init_isr();
-	
+
 	asm volatile("lidt %0" ::"m"(idt_ptr) : "memory");
 	kernel.idt_addr = (void*)idt_ptr.base;
 }
