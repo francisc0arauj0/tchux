@@ -1,3 +1,3 @@
 [submodule "kernel/uacpi"]
     path = kernel/uacpi
-    url = https://github.com/acpica/uacpi.git
+    url = https://github.com/uACPI/uACPI.git
