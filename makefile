@@ -22,14 +22,15 @@ XORRISOFLAGS := -R -r -J -hfsplus -apm-block-size 2048 \
 
 # Compiler
 CC := gcc
-CFLAGS := -mcmodel=large -ffreestanding -O2 -Wall -Werror -Wextra -Ikernel/libc -Ikernel/include -Ikernel/core
+CFLAGS := -mcmodel=large -ffreestanding -O2 -Wall -Werror -Wextra -Ikernel/libc -Ikernel/include -Ikernel/core -Ikernel/power/uACPI/include
 LDFLAGS := -nostdlib -T kernel/linker.ld
 
-# Kernel source and objects
+# Kernel source
 KERNELSRC := \
 	kernel/main.c \
 	kernel/cpu/gdt.c \
 	kernel/memory/memory.c \
+	kernel/memory/malloc.c \
 	kernel/cpu/idt.c \
 	kernel/cpu/ports.c \
 	kernel/graphics/fb.c \
@@ -41,7 +42,30 @@ KERNELSRC := \
 	kernel/cpu/sse.c \
 	kernel/core/core.c
 	
-KERNELOBJ := $(KERNELSRC:.c=.o)
+# UACPI source
+UACPISRC := \
+	kernel/power/uACPI/source/tables.c \
+	kernel/power/uACPI/source/types.c \
+	kernel/power/uACPI/source/uacpi.c \
+	kernel/power/uACPI/source/utilities.c \
+	kernel/power/uACPI/source/interpreter.c \
+	kernel/power/uACPI/source/opcodes.c \
+	kernel/power/uACPI/source/namespace.c \
+	kernel/power/uACPI/source/stdlib.c \
+	kernel/power/uACPI/source/shareable.c \
+	kernel/power/uACPI/source/opregion.c \
+	kernel/power/uACPI/source/default_handlers.c \
+	kernel/power/uACPI/source/io.c \
+	kernel/power/uACPI/source/notify.c \
+	kernel/power/uACPI/source/sleep.c \
+	kernel/power/uACPI/source/registers.c \
+	kernel/power/uACPI/source/resources.c \
+	kernel/power/uACPI/source/event.c \
+	kernel/power/uACPI/source/mutex.c \
+	kernel/power/uACPI/source/osi.c
+
+# Kernel objects
+KERNELOBJ := $(KERNELSRC:.c=.o) $(UACPISRC:.c=.o)
 
 override IMAGE_NAME := tchux-$(ARCH)
 
@@ -87,5 +111,5 @@ run-x86_64: bootloader/ovmf/ovmf-code-$(ARCH).fd $(IMAGE_NAME).iso
 	-cdrom $(IMAGE_NAME).iso $(QEMUFLAGS)
 
 clean:
-	rm -rf iso_root $(IMAGE_NAME).iso limine ovmf $(KERNEL) kernel/**/*.o
+	rm -rf iso_root $(IMAGE_NAME).iso limine ovmf $(KERNEL) kernel/**/*.o kernel/power/uACPI/source/*.o
 	
