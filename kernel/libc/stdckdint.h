@@ -1,4 +1,4 @@
-/* Copyright (C) 1998-2024 Free Software Foundation, Inc.
+/* Copyright (C) 2023-2024 Free Software Foundation, Inc.
 
 This file is part of GCC.
 
@@ -21,31 +21,20 @@ a copy of the GCC Runtime Library Exception along with this program;
 see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 <http://www.gnu.org/licenses/>.  */
 
-/*
- * ISO C Standard:  7.16  Boolean type and values  <stdbool.h>
- */
+/* ISO C23: 7.20 Checked Integer Arithmetic <stdckdint.h>.  */
 
-#ifndef _STDBOOL_H
-#define _STDBOOL_H
+#ifndef _STDCKDINT_H
+#define _STDCKDINT_H
 
-#ifndef __cplusplus
+#define __STDC_VERSION_STDCKDINT_H__ 202311L
 
-#if defined __STDC_VERSION__ && __STDC_VERSION__ > 201710L
-/* bool, true and false are keywords.  */
-#else
-#define bool	_Bool
-#define true	1
-#define false	0
+#define ckd_add(r, a, b) ((_Bool) __builtin_add_overflow (a, b, r))
+#define ckd_sub(r, a, b) ((_Bool) __builtin_sub_overflow (a, b, r))
+#define ckd_mul(r, a, b) ((_Bool) __builtin_mul_overflow (a, b, r))
+
+/* Allow for the C library to add its part to the header.  */
+#if !defined (_LIBC_STDCKDINT_H) && __has_include_next (<stdckdint.h>)
+# include_next <stdckdint.h>
 #endif
 
-#else /* __cplusplus */
-
-/* Supporting _Bool in C++ is a GCC extension.  */
-#define _Bool	bool
-
-#endif /* __cplusplus */
-
-/* Signal that all the definitions are present.  */
-#define __bool_true_false_are_defined	1
-
-#endif	/* stdbool.h */
+#endif /* stdckdint.h */
