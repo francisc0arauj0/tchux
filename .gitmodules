@@ -1,0 +1,3 @@
+[submodule "kernel/power/uACPI"]
+    path = kernel/power/uACPI
+    url = https://github.com/uACPI/uACPI
