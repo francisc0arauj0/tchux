@@ -8,6 +8,7 @@
 #include <serial.h>
 #include <sse.h>
 #include <shell.h>
+#include <bootinfo.h>
 
 static void hcf(void)
 {
@@ -27,6 +28,9 @@ void kmain(void)
 	
 	init_sse();
 	init_serial();
+	
+	/* limine */
+	init_bootinfo();
 	
 	/* framebuffer */
 	init_fb();

@@ -41,7 +41,8 @@ KERNELSRC := \
 	kernel/drivers/serial.c \
 	kernel/cpu/sse.c \
 	kernel/core/core.c \
-	kernel/power/uacpi.c
+	kernel/power/uacpi.c \
+	kernel/boot/bootinfo.c
 	
 # UACPI source
 UACPISRC := \
