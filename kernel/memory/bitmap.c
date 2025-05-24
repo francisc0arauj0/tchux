@@ -66,7 +66,7 @@ void bitmap_mark_region(struct bitmap_struct *bitmap, void *base_ptr, size_t siz
 	}
 	else
 	{
-		base = block_roundup(bitmap, base_ptr);
+		base = bitmap_block_roundup(bitmap, base_ptr);
 		size = size_bytes / 4096;
 		bitmap_clear_blocks(bitmap, base, size);
 	}

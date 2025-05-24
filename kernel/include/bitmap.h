@@ -15,7 +15,7 @@ struct bitmap_struct
 	bool ready;
 };
 
-size_t bitmap_block(struct bitmap_struct *bitmap, void *ptr);
+size_t bitmap_block_roundup(struct bitmap_struct *bitmap, void *ptr);
 size_t block_roundup(struct bitmap_struct *bitmap, void *ptr);
 
 uint32_t bitmap_get(struct bitmap_struct *bitmap, uint64_t block);
