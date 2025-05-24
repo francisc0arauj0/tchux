@@ -13,15 +13,20 @@ struct bitmap_struct
 	uint64_t last_scan;
 	uint64_t mem_start;
 	bool ready;
-}
+};
 
-uint32_t bitmap_get(struct bitmap_struct *bitmap, uint64_t block)
-void bitmap_set(struct bitmap_struct *bitmap, uint64_t block)
-void bitmap_clear(struct bitmap_struct *bitmap, uint64_t block)
+size_t bitmap_block(struct bitmap_struct *bitmap, void *ptr);
+size_t block_roundup(struct bitmap_struct *bitmap, void *ptr);
+
+uint32_t bitmap_get(struct bitmap_struct *bitmap, uint64_t block);
+void bitmap_set(struct bitmap_struct *bitmap, uint64_t block);
+void bitmap_clear(struct bitmap_struct *bitmap, uint64_t block);
 
 void bitmap_mark_blocks(struct bitmap_struct *bitmap, size_t start, size_t size);
 void bitmap_clear_blocks(struct bitmap_struct *bitmap, size_t start, size_t size);
 
+void bitmap_mark_region(struct bitmap_struct *bitmap, void *base_ptr, size_t size, int used);
 
+extern struct bitmap_struct physical;
 
 #endif

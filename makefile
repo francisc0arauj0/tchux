@@ -31,6 +31,8 @@ KERNELSRC := \
 	kernel/cpu/gdt.c \
 	kernel/memory/memory.c \
 	kernel/memory/malloc.c \
+	kernel/memory/pmm.c \
+	kernel/memory/bitmap.c \
 	kernel/cpu/idt.c \
 	kernel/cpu/ports.c \
 	kernel/graphics/fb.c \
@@ -43,7 +45,7 @@ KERNELSRC := \
 	kernel/core/core.c \
 	kernel/power/uacpi.c \
 	kernel/boot/bootinfo.c
-	
+
 # UACPI source
 UACPISRC := \
 	kernel/power/uACPI/source/tables.c \

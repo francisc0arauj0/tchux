@@ -9,6 +9,7 @@
 #include <sse.h>
 #include <shell.h>
 #include <bootinfo.h>
+#include <pmm.h>
 
 static void hcf(void)
 {
@@ -36,6 +37,9 @@ void kmain(void)
 	init_fb();
 	init_console();
 	init_shell(1);
+	
+	/* memory */
+	init_pmm();
 	
 	/* cpu */
 	init_gdt();

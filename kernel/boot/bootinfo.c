@@ -36,4 +36,14 @@ void init_bootinfo(void)
 {
 	kernel.hhdm = limine_hhdm_request.response->offset;
 	kernel.memmap = limine_memory_map_request.response;
+	
+	kernel.memory_total = 0;
+	for (int i = 0; kernel.memmap->entry_count; i++)
+	{
+		struct limine_memmap_entry *entry = kernel.memmap->entries[i];
+		if (entry->type != LIMINE_MEMMAP_RESERVED)
+		{
+			kernel.memory_total += entry->length;
+		}
+	}
 }

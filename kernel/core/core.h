@@ -12,6 +12,7 @@ struct kernel_struct
 	
 	uint64_t hhdm;
 	struct limine_memmap_response *memmap;
+	size_t memory_total;
 };
 
 extern struct kernel_struct kernel;
