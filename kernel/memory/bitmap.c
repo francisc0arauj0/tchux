@@ -8,7 +8,7 @@ size_t bitmap_block(struct bitmap_struct *bitmap, void *ptr)
 	return (size_t)(u8_ptr - bitmap->mem_start) / 4096;
 }
 
-size_t block_roundup(struct bitmap_struct *bitmap, void *ptr)
+size_t bitmap_block_roundup(struct bitmap_struct *bitmap, void *ptr)
 {
 	uint8_t *u8_ptr = (uint8_t *)ptr;
 	return (size_t)(((size_t)(u8_ptr - bitmap->mem_start) + 4096 - 1) / 4096);
