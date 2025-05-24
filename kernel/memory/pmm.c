@@ -1,8 +1,11 @@
+#include <stdint.h>
 #include <pmm.h>
 #include <bitmap.h>
 #include <bootinfo.h>
 #include <core.h>
 #include <memory.h>
+#include <spinlock.h>
+
 
 struct bitmap_struct physical;
 
@@ -62,4 +65,20 @@ void init_pmm()
 	physical.allocated_size_blocks = 0;
 	
 	bitmap->ready = true;
+}
+
+spinlock LOCK_PMM = ATOMIC_FLAG_INIT;
+
+size_t pmm_allocate(int pages)
+{
+	spinlock_acquire(&LOCK_PMM);
+	size_t phys = (size_t)bitmap_allocate(&physical, pages);
+	spinlock_release(&LOCK_PMM);
+	
+	if (!phys)
+	{
+		/* panic */
+	}
+	
+	return phys;
 }

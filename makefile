@@ -44,7 +44,8 @@ KERNELSRC := \
 	kernel/cpu/sse.c \
 	kernel/core/core.c \
 	kernel/power/uacpi.c \
-	kernel/boot/bootinfo.c
+	kernel/boot/bootinfo.c \
+	kernel/sync/spinlock.c
 
 # UACPI source
 UACPISRC := \
