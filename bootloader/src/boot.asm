@@ -3,49 +3,39 @@ bits 16
 
 start:
 	jmp main
-	
-puts:
-	; save regs we will modify
-	push si
-	push ax
-
-.loop:
-	lodsb			; load next char in al
-	or al, al		; verify if next char is null?
-	jz .done
-	
-	mov ah, 0x0e	; call bios interrupt
-	mov bh, 0		; page number 0
-	int 0x10		; bios video interrupt
-	
-	jmp .loop
-	
-.done:
-	pop ax
-	pop si
-	ret
 
 main:
-	; setup data segments
+	; this causes the stack to stay in _0x0000:0x7C00
 	mov ax, 0
 	mov ds, ax
 	mov es, ax
-	
-	; setup stack
 	mov ss, ax
-	mov sp, 0x7C00	; stack grows from where we are loaded in memory
+	mov sp, 0x7C00
+
+	; load sector 2 (LBA 1) to 0x1000
+	; mov ah, 0x02			; read sectors
+	; mov al, 1				; number of sectors to read
+	; mov ch, 0				; cylinder 0
+	; mov cl, 2				; sctor 2
+	; mov dh, 0				; header 0
+	; mov dl, [boot_drive]	; drive
+	; mov bx, 0x1000			; destination address
+	; int 0x13				; call BIOS to read from disk
 	
-	mov si, msg
-	call puts
+	; jc disk_error			; if CF is set, error
 	
+	; jmp 0x0000:0x1000		; jump to the loaded "kernel"
 	hlt
+	
+;disk_error:
+;	hlt
+;	jmp $
+
+;boot_drive:
+;	db 0
 	
 .halt:
 	jmp .halt
 	
-
-msg: 
-	db 'Bootloader working', 0
-	
 times 510-($-$$) db 0
-dw 0AA55h
+dw 0xAA55
