@@ -1,3 +1,10 @@
+;============================
+; File: Global Descriptor Table (GDT)
+; Author: Francisco Araújo
+; Year: 2025
+; Project: Tchux Bootloader
+;===========================
+
 gdt_start:
 
 gdt_null:
@@ -25,3 +32,6 @@ gdt_end:
 gdt_descriptor:
 	dw gdt_end - gdt_start - 1
 	dd gdt_start
+
+code_segment equ gdt_code - gdt_start
+data_segment equ gdt_data - gdt_start
