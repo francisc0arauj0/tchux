@@ -31,12 +31,26 @@ start:
 
 bits 16
 
-main:
+main:	
 	mov bx, load_kernel_log
 	call print
 	
+	; ===== Delay  =====
+	mov cx, 0xFFFF
+.delay_outer:
+	mov dx, 0xFFFF
+.delay_inner:
+	dec dx
+	jnz .delay_inner
+	dec cx
+	jnz .delay_outer
+	; ===================
+	
+	mov ax, 0x0003
+	int 0x10
+	
 	mov bx, kernel_offset
-	mov dh, 1
+	mov dh, 2
 	mov dl, [boot_drive]
 	call disk_load
 	

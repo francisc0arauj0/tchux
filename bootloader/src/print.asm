@@ -6,19 +6,19 @@
 ;===========================
 
 print:
-  pusha
-  mov ah, 0xe
-  jmp read_character
+	pusha
+	mov ah, 0xe
+	jmp read_character
 
 read_character:
-  mov al, [bx]
+	mov al, [bx]
 
-  cmp al, 0
-  jne print_character
-  popa
-  ret
+	cmp al, 0
+	jne print_character
+	popa
+	ret
 
 print_character:
-  int 0x10
-  add bx, 1
-  jmp read_character
+	int 0x10
+	add bx, 1
+	jmp read_character

@@ -7,8 +7,13 @@
 ===========================
 */
 
+#include <vga.h>
+
+
 void kmain()
 {
-	char *vm = (char *) 0xb8000;
-	*vm = 'X';
+	vga_init();
+	vga_reset();
+	vga_set_bg(COLOR8_WHITE, COLOR8_BLACK);
+	vga_print("Hello World");
 }

@@ -6,8 +6,9 @@
 ;===========================
 
 bits 32
+global _start
 extern kmain
 
-start:
+_start:
     jmp kmain
 	jmp $
