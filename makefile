@@ -9,10 +9,10 @@ XORRISO_FLAGS = -R -r -J -hfsplus -apm-block-size 2048 --efi-boot boot/limine/li
 CC = gcc
 CC_FLAGS = -ffreestanding -O2 -Wall -Wextra -nostdlib -fno-pic -fno-pie
 
-LD = LD
-LD_FLAGS = -nostdlib -T arch/x86_64/linker.ld
+LD = ld
+LD_FLAGS = -nostdlib -T kernel/arch/$(ARCH)/linker.ld
 
-KERNEL_SRC = arch/x86_64/kernel/main.c
+KERNEL_SRC = kernel/arch/$(ARCH)/main.c
 KERNEL_OUT = out/kernel
 
 override IMAGE_NAME := tchux-$(ARCH)
