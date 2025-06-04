@@ -1,0 +1,4 @@
+bootloader
+out
+*.iso
+*.hdd
