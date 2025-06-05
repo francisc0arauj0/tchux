@@ -10,9 +10,9 @@ CC = gcc
 CC_FLAGS = -ffreestanding -O2 -Wall -Wextra -nostdlib -fno-pic -fno-pie
 
 LD = ld
-LD_FLAGS = -nostdlib -T kernel/arch/$(ARCH)/linker.ld
+LD_FLAGS = -nostdlib -T kernel/linker.ld
 
-KERNEL_SRC = kernel/arch/$(ARCH)/main.c
+KERNEL_SRC = kernel/main.c
 KERNEL_OUT = out/kernel
 
 override IMAGE_NAME := tchux-$(ARCH)
