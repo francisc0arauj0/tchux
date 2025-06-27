@@ -16,8 +16,9 @@ make
 ```
 
 ## Layout
-- **limine** - Limine Bootolader
+- **init** - Initial files
 - **kernel** - Tchux kernel
+- **limine** - Limine bootolader
 - **util** - Utility scripts
 
 
