@@ -26,7 +26,8 @@ limine:
 tchux_kernel: $(KERNEL_SRC)
 	mkdir -p out
 	$(CC) $(CC_FLAGS) -c kernel/main.c -o out/main.o
-	$(LD) $(LD_FLAGS) -o $@ out/main.o
+	$(CC) $(CC_FLAGS) -c kernel/cpu/gdt.c -o out/gdt.o
+	$(LD) $(LD_FLAGS) -o $@ out/main.o out/gdt.o
 
 # crete iso
 $(IMAGE_NAME).iso: limine tchux_kernel init/limine.conf
