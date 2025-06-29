@@ -13,6 +13,6 @@ typedef unsigned int u32;
 typedef signed long long i64;
 typedef unsigned long long u64;
 
-typedef uint64_t size_t;
+typedef u64 size_t;
 
 #endif
